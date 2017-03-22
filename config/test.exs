@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :url_shot, UrlShot.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "password",
   database: "url_shot_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
