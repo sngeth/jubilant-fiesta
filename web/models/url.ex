@@ -7,4 +7,9 @@ defmodule UrlShot.Url do
 
     timestamps()
   end
+
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:original_url, :short_url])
+  end
 end
