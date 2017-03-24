@@ -13,7 +13,14 @@ defmodule UrlShot.UrlController do
 
     case Repo.insert(changeset) do
       {:ok, url} ->
-        render(conn, "new.json", url: url, status: 201)
+        conn
+        |> put_status(:created)
+        |> render("new.json", url: url)
     end
+  end
+
+  def show(conn, %{"short_url" => short_url}) do
+    url = Repo.get_by(Url, short_url: short_url)
+    redirect conn, external: url.original_url
   end
 end

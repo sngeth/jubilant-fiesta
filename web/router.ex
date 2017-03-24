@@ -17,6 +17,7 @@ defmodule UrlShot.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/:short_url", UrlController, :show
   end
 
   scope "/api", UrlShot do
