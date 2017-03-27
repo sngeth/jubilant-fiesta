@@ -21,6 +21,16 @@ defmodule UrlShot.UrlController do
 
   def show(conn, %{"short_url" => short_url}) do
     url = Repo.get_by(Url, short_url: short_url)
-    redirect conn, external: url.original_url
+    redirect conn, external: url_with_protocol(url.original_url)
+  end
+
+  defp url_with_protocol(url) do
+    protocol = ~r/^((http|https|ftp):\/\/)/
+
+    if Regex.match?(protocol, url) do
+      url
+    else
+      "http://#{url}"
+    end
   end
 end
