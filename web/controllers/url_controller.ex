@@ -20,8 +20,12 @@ defmodule UrlShot.UrlController do
   end
 
   def show(conn, %{"short_url" => short_url}) do
-    url = Repo.get_by(Url, short_url: short_url)
-    redirect conn, external: url_with_protocol(url.original_url)
+    case Repo.get_by(UrlShot.Url, short_url: short_url) do
+      nil ->
+        conn |> put_status(:not_found) |> render(UrlShot.ErrorView, "404.html")
+      url ->
+        redirect conn, external: url_with_protocol(url.original_url)
+    end
   end
 
   defp url_with_protocol(url) do

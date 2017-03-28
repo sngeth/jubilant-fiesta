@@ -16,9 +16,13 @@ defmodule UrlShot.UrlControllerTest do
 
   test "GET /:short_url", %{conn: conn} do
     new_url = insert(:url)
-
     conn = get conn, "/#{new_url.short_url}"
 
     assert redirected_to(conn) =~ new_url.original_url
+  end
+
+  test "invalid short url" do
+    conn = get conn, "/aninvalidshorturl"
+    assert html_response(conn, 404) =~ "Page not found"
   end
 end
